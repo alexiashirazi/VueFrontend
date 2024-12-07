@@ -72,65 +72,124 @@
   </script>
   
   <style scoped>
-  /* Stiluri pentru formularul de logare */
+/* Page Background with Image */
+body {
+  background: url('@/components/pngs/loginbg.png') ; /* Add background image */
+  background-size: cover; /* Ensure the image covers the whole page */
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Login Container */
+.login-container {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: white; /* Keep the container white */
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Heading */
+h1 {
+  margin-bottom: 20px;
+  font-size: 28px;
+  color: #ff5e99; /* Pink */
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+}
+
+/* Form Group */
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* Button Styles */
+button {
+  width: 100%;
+  padding: 10px;
+  background: linear-gradient(90deg, #ff5e99, #ffde59); /* Pink to Yellow Gradient */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+  background: linear-gradient(90deg, #ffde59, #ff5e99); /* Yellow to Pink Gradient */
+  box-shadow: 0 4px 10px rgba(255, 94, 153, 0.5);
+}
+
+/* Error Message */
+.error-message {
+  margin-top: 10px;
+  color: #ff5e99;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Create Account Section */
+.create-account {
+  margin-top: 20px;
+}
+
+.create-account p {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.create-account a {
+  color: #ff5e99;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.create-account a:hover {
+  text-decoration: underline;
+  color: #ffde59; /* Yellow on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
   .login-container {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    text-align: center;
+    margin: 20px;
+    padding: 15px;
   }
-  
+
   h1 {
-    margin-bottom: 20px;
     font-size: 24px;
   }
-  
-  .form-group {
-    margin-bottom: 15px;
-    text-align: left;
-  }
-  
-  input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
+
   button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  .create-account {
-    margin-top: 20px;
-  }
-  
-  .create-account p {
-    margin: 0;
     font-size: 14px;
   }
-  
-  .create-account a {
-    color: #007bff;
-    text-decoration: none;
-    font-weight: bold;
+
+  input {
+    font-size: 12px;
   }
-  
-  .create-account a:hover {
-    text-decoration: underline;
-  }
-  </style>
+}
+</style>
+
   

@@ -5,6 +5,8 @@ import CreateAccount from '../views/CreateAccountView.vue';
 import BlogSection from '../components/BlogSection.vue'
 import QuizView from '../views/QuizView.vue'
 import CalendarView from '../views/CalendarView.vue';
+import LeaderboardView from '../views/LeaderboardView.vue';
+import AboutView from '../views/AboutView.vue';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,6 +41,16 @@ const router = createRouter({
           name:'calendar',
           component: CalendarView,
         },
+        {
+          path: '/leaderboard',
+          name: 'leader',
+          component: LeaderboardView,
+      },
+      {
+        path: '/about',
+        name: 'about',
+        component: AboutView,
+    },
     ],
 });
 

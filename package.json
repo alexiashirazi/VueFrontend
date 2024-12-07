@@ -11,6 +11,8 @@
   "dependencies": {
     "@coreui/coreui": "^5.2.0",
     "@coreui/vue": "^5.4.1",
+    "@fullcalendar/core": "^6.1.15",
+    "@fullcalendar/daygrid": "^6.1.15",
     "axios": "^1.7.9",
     "dayjs": "^1.11.13",
     "primeflex": "^3.3.1",

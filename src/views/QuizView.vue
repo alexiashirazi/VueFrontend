@@ -1,4 +1,3 @@
-
 <template>
     <div class="quiz-container">
       <h1>Quiz Interactiv</h1>
@@ -33,47 +32,46 @@
   <script setup>
   import { ref } from "vue";
   import axios from "axios"; // Importă Axios
-
   
   const questions = ref([
     {
       text: "Cum îți începi dimineața de obicei?",
       options: [
-        { text: "Cu o ceașcă mare de cafea și ceva dulce.", value: "a" },
-        { text: "Cu o alergare sau o scurtă sesiune de exerciții fizice.", value: "b" },
-        { text: "Cu un pahar mare de apă și planificarea zilei.", value: "c" },
+        { text: "Cu o ceașcă mare de cafea și ceva dulce.", value: 1 },
+        { text: "Cu o alergare sau o scurtă sesiune de exerciții fizice.", value: 2 },
+        { text: "Cu un pahar mare de apă și planificarea zilei.", value: 3 },
       ],
     },
     {
       text: "Ce faci de obicei în pauzele de la lucru?",
       options: [
-        { text: "Mănânc ceva rapid, de obicei un snack nesănătos.", value: "a" },
-        { text: "Fac o plimbare scurtă sau întindere.", value: "b" },
-        { text: "Îmi verific telefonul sau stau pe rețele sociale.", value: "c" },
+        { text: "Mănânc ceva rapid, de obicei un snack nesănătos.", value: 1 },
+        { text: "Fac o plimbare scurtă sau întindere.", value: 2 },
+        { text: "Îmi verific telefonul sau stau pe rețele sociale.", value: 3 },
       ],
     },
     {
       text: "Ce activitate te atrage cel mai mult pentru relaxare?",
       options: [
-        { text: "Să citesc sau să mă uit la un film.", value: "a" },
-        { text: "Să încerc o activitate fizică nouă, cum ar fi înotul sau yoga.", value: "b" },
-        { text: "Să petrec timp în natură sau să beau o băutură sănătoasă.", value: "c" },
+        { text: "Să citesc sau să mă uit la un film.", value: 1 },
+        { text: "Să încerc o activitate fizică nouă, cum ar fi înotul sau yoga.", value: 2 },
+        { text: "Să petrec timp în natură sau să beau o băutură sănătoasă.", value: 3 },
       ],
     },
     {
       text: "Cum îți gestionezi stresul de obicei?",
       options: [
-        { text: "Îmi aprind o țigară sau mănânc ceva care mă face să mă simt bine temporar.", value: "a" },
-        { text: "Mă duc la sală sau fac mișcare intensă.", value: "b" },
-        { text: "Încerc tehnici de mindfulness, cum ar fi respirația controlată.", value: "c" },
+        { text: "Îmi aprind o țigară sau mănânc ceva care mă face să mă simt bine temporar.", value: 1 },
+        { text: "Mă duc la sală sau fac mișcare intensă.", value: 2 },
+        { text: "Încerc tehnici de mindfulness, cum ar fi respirația controlată.", value: 3 },
       ],
     },
     {
       text: "Ce ți-ar plăcea să adaugi în rutina ta zilnică?",
       options: [
-        { text: "Să reduc obiceiurile nesănătoase, cum ar fi fumatul sau gustările frecvente.", value: "a" },
-        { text: "Să fac mai mult sport și să am o viață activă.", value: "b" },
-        { text: "Să fiu mai hidratat și să am un stil de viață echilibrat.", value: "c" },
+        { text: "Să reduc obiceiurile nesănătoase, cum ar fi fumatul sau gustările frecvente.", value: 1 },
+        { text: "Să fac mai mult sport și să am o viață activă.", value: 2 },
+        { text: "Să fiu mai hidratat și să am un stil de viață echilibrat.", value: 3 },
       ],
     },
   ]);
@@ -82,29 +80,30 @@
   const showResults = ref(false);
   
   async function submitQuiz() {
-  if (answers.value.includes(null)) {
-    alert("Te rugăm să răspunzi la toate întrebările.");
-    return;
+    if (answers.value.includes(null)) {
+      alert("Te rugăm să răspunzi la toate întrebările.");
+      return;
+    }
+  
+    // Creăm lista de răspunsuri
+    const numericAnswers = answers.value;
+  
+    try {
+      // Trimite răspunsurile la backend
+      const response = await axios.post("http://localhost:8080/quiz", {
+        answers: numericAnswers,
+      });
+  
+      console.log("Răspuns trimis:", response.data);
+      showResults.value = true;
+    } catch (error) {
+      console.error("Eroare la trimiterea răspunsurilor:", error);
+    }
   }
-
-  // Creăm lista de răspunsuri sub formă numerică
-  const numericAnswers = answers.value.map((answer) => answer);
-
-  try {
-    // Trimite răspunsurile la backend
-    const response = await axios.post("http://localhost:8080/quiz", {
-      answers: numericAnswers,
-    });
-
-    console.log("Răspuns trimis:", response.data);
-    showResults.value = true;
-  } catch (error) {
-    console.error("Eroare la trimiterea răspunsurilor:", error);
-  }
-}
-</script>
+  </script>
   
   <style scoped>
+  /* Stiluri existente */
   .quiz-container {
     max-width: 600px;
     margin: 50px auto;
