@@ -5,12 +5,9 @@ import BlogSection from './components/BlogSection.vue'
 </script>
 
 <template>
-
-  <RouterView/>
   <div id="app">
     <!-- Navbar is imported as a global reusable component -->
     <Navbar/>
-    <BlogSection/>
     <RouterView/>
   </div>
 </template>

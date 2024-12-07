@@ -23,7 +23,7 @@ const router = createRouter({
             component: CreateAccount,
         },
         {
-            path: '/', // Default route
+            path: '/blog', // Default route
             name: 'Blog',
             component: BlogSection, // Render BlogSection on the root path
         },

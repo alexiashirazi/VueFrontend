@@ -3,7 +3,7 @@
       <!-- First Navbar -->
       <CNavbar expand="lg" color-scheme="dark" class="bg-dark">
         <CContainer fluid>
-          <CNavbarBrand href="#">APPNAME</CNavbarBrand>
+          <CNavbarBrand href="/">APPNAME</CNavbarBrand>
           <CNavbarToggler aria-label="Toggle navigation" aria-expanded="false" @click="visible = !visible"/>
           <CCollapse class="navbar-collapse" :visible="visible">
             <CNavbarNav>
@@ -11,12 +11,12 @@
                 <CNavLink href="#" active>About</CNavLink>
               </CNavItem>
               <CNavItem>
-                <CNavLink href="#">Blog</CNavLink>
+                <CNavLink href="/blog">Blog</CNavLink>
               </CNavItem>
               <CDropdown variant="nav-item" :popper="false">
                 <CDropdownToggle color="secondary">Home</CDropdownToggle>
                 <CDropdownMenu>
-                  <CDropdownItem href="#">Login</CDropdownItem>
+                  <CDropdownItem href="/login">Login</CDropdownItem>
                   <CDropdownItem href="#">Global LeaderBoards</CDropdownItem>
                   <CDropdownDivider />
                   <CDropdownItem href="#">Testimonials</CDropdownItem>
