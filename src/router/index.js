@@ -1,24 +1,33 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
+import HomeView from '../views/HomeView.vue';
+import LogInView from '../views/LogInView.vue';
+import CreateAccount from '../views/CreateAccountView.vue';
 import BlogSection from '../components/BlogSection.vue'
-import TheWelcome from '../components/TheWelcome.vue'
-
-const routes = [
-  {
-    path: '/welcome', // Optional route for TheWelcomeView
-    name: 'Welcome',
-    component: TheWelcome,
-  },
-  {
-    path: '/', // Default route
-    name: 'Blog',
-    component: BlogSection, // Render BlogSection on the root path
-  },
-  
-]
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes,
-})
+    history: createWebHistory(import.meta.env.BASE_URL),
+    routes: [
+        {
+            path: '/',
+            name: 'home',
+            component: HomeView,
+        },
+        {
+            path: '/login',
+            name: 'login',
+            component: LogInView,
+        },
+        {
+            path: '/createAccount',
+            name: 'createAccount',
+            component: CreateAccount,
+        },
+        {
+            path: '/', // Default route
+            name: 'Blog',
+            component: BlogSection, // Render BlogSection on the root path
+        },
+    ],
+});
 
-export default router
+export default router;

@@ -1,9 +1,13 @@
-<script setup>
-import TheWelcome from '../components/TheWelcome.vue'
+<template>
+  <div></div>
+</template>
+
+<script>
+export default {
+  name: "HomeView",
+};
 </script>
 
-<template>
-  <main>
-    <TheWelcome />
-  </main>
-</template>
+<style scoped>
+/* Șterge tot conținutul sau lasă-l gol */
+</style>

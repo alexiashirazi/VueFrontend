@@ -1,15 +1,17 @@
 <script setup>
+import {RouterView} from 'vue-router'
 import Navbar from './components/Navbar.vue'
 import BlogSection from './components/BlogSection.vue'
-import { RouterView } from 'vue-router'
 </script>
 
 <template>
+
+  <RouterView/>
   <div id="app">
     <!-- Navbar is imported as a global reusable component -->
-    <Navbar />
-    <BlogSection /> 
-    <RouterView />
+    <Navbar/>
+    <BlogSection/>
+    <RouterView/>
   </div>
 </template>
 
