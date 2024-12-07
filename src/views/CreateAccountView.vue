@@ -60,18 +60,22 @@
   </template>
   
   <script setup>
-  import { ref } from "vue";
-  import axios from "axios";
-  
-  const nickname = ref("");
-  const firstName = ref("");
-  const lastName = ref("");
-  const email = ref("");
-  const password = ref("");
-  const successMessage = ref("");
-  const errorMessage = ref("");
-  
-  async function handleRegister() {
+import { ref } from "vue";
+import { useRouter } from "vue-router"; // Importă useRouter
+import axios from "axios";
+
+const nickname = ref("");
+const firstName = ref("");
+const lastName = ref("");
+const email = ref("");
+const password = ref("");
+const successMessage = ref("");
+const errorMessage = ref("");
+
+// Inițializează router-ul
+const router = useRouter();
+
+async function handleRegister() {
   try {
     const response = await axios.post("http://localhost:8080/api/users/register", {
       nickname: nickname.value,
@@ -85,6 +89,8 @@
       successMessage.value = "Account created successfully!";
       errorMessage.value = "";
       clearForm();
+      // Navighează la pagina Quiz
+      router.push("/quiz");
     } else {
       errorMessage.value = "Registration failed. Nickname might be taken.";
       successMessage.value = "";
