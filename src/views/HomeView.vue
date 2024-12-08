@@ -9,10 +9,9 @@ import Testimonials from "../components/Testimonials.vue";
    <NavBar/>
   <section class="hero-section">
     <div class="hero-content">
-      <h1 class="hero-title">Welcome to Our Fluid Plans</h1>
+      <h1 class="hero-title">Welcome to Our Wellnest</h1>
       <p class="hero-subtitle">
-        Explore flexible and unlimited design services that fit your needs.
-        Whether you're starting out or scaling up, we've got the perfect plan for you.
+        The site encourages a healthy lifestyle by promoting positive habits, with a focus on friendly competition, local leaderboards, and challenge validation. Users are inspired to improve their physical, mental, and emotional well-being in a fun and interactive way
       </p>
       <!-- Anchor Link for Scrolling -->
       <a href="#blog-section" class="cta-button">Explore Plans</a>
