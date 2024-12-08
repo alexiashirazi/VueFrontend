@@ -1,3 +1,5 @@
+
+
 <template>
     <div class="testimonials-page">
       <section class="testimonials-section">
@@ -28,6 +30,9 @@
   </template>
   <script setup>
   import { ref } from "vue";
+  import man1 from "./pngs/man1.jpg";
+  import man2 from "./pngs/man2.jpg";
+  import man3 from "./pngs/man3.jpg";
   
   // Testimonials Data
   const testimonials = ref([
@@ -35,19 +40,19 @@
       name: "Mike Torello",
       role: "Executive Engineer",
       text: "This platform has truly transformed how we work. It's fast, reliable, and has helped us streamline our processes.",
-      image: "https://via.placeholder.com/100",
+      image: man1,
     },
     {
       name: "Rick Wright",
       role: "Senior Designer",
       text: "I've never experienced such a seamless workflow. The team's support is outstanding, and the results speak for themselves.",
-      image: "https://via.placeholder.com/100",
+      image: man2,
     },
     {
       name: "Devon Miles",
       role: "Project Manager",
       text: "Using this service has been a game-changer for our team. We’ve achieved more in the past year than we ever thought possible.",
-      image: "https://via.placeholder.com/100",
+      image: man3,
     },
   ]);
   

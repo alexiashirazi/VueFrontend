@@ -4,7 +4,7 @@
     <CNavbar v-if="isLoggedIn" expand="lg" class="custom-navbar">
       <CContainer fluid>
         <!-- Navbar Brand -->
-        <CNavbarBrand href="/" class="custom-brand">APPNAME</CNavbarBrand>
+        <CNavbarBrand href="/" class="custom-brand">Wellnest</CNavbarBrand>
 
         <!-- Navbar Toggler -->
         <CNavbarToggler

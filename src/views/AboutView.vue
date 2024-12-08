@@ -16,42 +16,11 @@
       <h2 class="section-heading">Our Mission</h2>
       <div class="animated-line"></div>
       <p class="mission-text">
-        At APPNAME, we empower individuals and businesses through creativity and collaboration.
-        With every project, we push boundaries and create lasting impressions.
+        At Wellnest, we inspire individuals to embrace a healthier lifestyle by fostering positive habits. Through friendly competition, local leaderboards, and engaging challenges, we aim to create an interactive and enjoyable platform that promotes physical, mental, and emotional well-being. Together, let's build a healthier, happier community! 
       </p>
     </section>
 
-    <!-- Team Section -->
-    <section class="team-section">
-      <h2 class="section-heading">Meet Our Team</h2>
-      <div class="animated-line"></div>
-      <div class="team-members">
-        <div class="team-member animate-scale">
-          <img
-              src="https://via.placeholder.com/200"
-              alt="James Word"
-              class="team-image"
-          />
-          <h3 class="team-name">James Word</h3>
-          <p class="team-role">Creative Director</p>
-          <p class="team-description">
-            James brings a wealth of experience in branding and graphic design. His work has helped companies find their voice.
-          </p>
-        </div>
-        <div class="team-member animate-scale">
-          <img
-              src="https://via.placeholder.com/200"
-              alt="Kyle Key"
-              class="team-image"
-          />
-          <h3 class="team-name">Kyle Key</h3>
-          <p class="team-role">Strategy Lead</p>
-          <p class="team-description">
-            Kyle specializes in building strategic roadmaps that align with creative visions. His passion for innovation drives projects forward.
-          </p>
-        </div>
-      </div>
-    </section>
+   
 
     <!-- Footer Section -->
     <section class="footer-section">
