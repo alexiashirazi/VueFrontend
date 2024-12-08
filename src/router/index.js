@@ -1,7 +1,12 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import {createRouter, createWebHistory} from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import LogInView from '../views/LogInView.vue';
 import CreateAccount from '../views/CreateAccountView.vue';
+import Leaderboard from "@/views/LeaderboardView.vue";
+import TestimonialsView from "@/components/Testimonials.vue";
+import MyGroups from "@/components/MyGroups.vue";
+import MakeGroup from "@/components/MakeGroup.vue";
+import MyPrizesView from "@/views/MyPrizesView.vue";
 import BlogSection from '../components/BlogSection.vue'
 import QuizView from '../views/QuizView.vue'
 import CalendarView from '../views/CalendarView.vue';
@@ -35,41 +40,72 @@ const router = createRouter({
             component: BlogSection, // Render BlogSection on the root path
         },
         {
-          path: '/quiz',
-          name:'quiz',
-          component: QuizView,
+            path: '/leaderboard', // Default route
+            name: 'LeaderBoard',
+            component: Leaderboard, // Render BlogSection on the root path
         },
         {
-          path: '/calendar',
-          name:'calendar',
-          component: CalendarView,
+            path: '/about',
+            name: 'About',
+            component: AboutView,
         },
         {
-          path: '/leaderboard',
-          name: 'leader',
-          component: LeaderboardView,
-      },
-      {
-        path: '/about',
-        name: 'about',
-        component: AboutView,
-    },
+            path: '/testimonials',
+            name: 'Testimonials',
+            component: TestimonialsView,
+        },
+        {
+            path: '/mygroups',
+            name: 'My Groups',
+            component: MyGroups,
+        },
 
-    {
-      path: '/home1',
-      name:'home1',
-      component: HomeUser,
-    },
-    {
-      path: '/contact',
-      name:'contact',
-      component: Contact,
-    },
-    {
-      path: '/recommendation',
-      name: 'recommendation',
-      component:Recommendation,
-    }
+        {
+            path: '/make-group',
+            name: 'Make Groups',
+            component: MakeGroup,
+        },
+        {
+            path: '/rewards',
+            name: 'Rewards',
+            component: MyPrizesView,
+        },
+        {
+            path: '/quiz',
+            name: 'quiz',
+            component: QuizView,
+        },
+        {
+            path: '/calendar',
+            name: 'calendar',
+            component: CalendarView,
+        },
+        {
+            path: '/leaderboard',
+            name: 'leader',
+            component: LeaderboardView,
+        },
+        {
+            path: '/about',
+            name: 'about',
+            component: AboutView,
+        },
+
+        {
+            path: '/home1',
+            name: 'home1',
+            component: HomeUser,
+        },
+        {
+            path: '/contact',
+            name: 'contact',
+            component: Contact,
+        },
+        {
+            path: '/recommendation',
+            name: 'recommendation',
+            component: Recommendation,
+        }
     ],
 });
 
