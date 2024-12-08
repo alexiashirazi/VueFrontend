@@ -1,109 +1,84 @@
 <template>
     <div class="quiz-container">
-      <h1>Quiz Interactiv</h1>
+      <h1>Interactive Quiz</h1>
       <form @submit.prevent="submitQuiz">
         <div v-for="(question, index) in questions" :key="index" class="question">
-          <p class="question-title">{{ question.text }}</p>
+          <p class="question-title">{{ question.question }}</p>
           <div class="options">
             <label
-              v-for="option in question.options"
-              :key="option.value"
+              v-for="(option, optIndex) in question.options"
+              :key="optIndex"
               class="option"
             >
               <input
                 type="radio"
                 :name="'question-' + index"
-                :value="option.value"
+                :value="optIndex"
                 v-model="answers[index]"
               />
-              <span>{{ option.text }}</span>
+              <span>{{ option }}</span>
             </label>
           </div>
         </div>
-        <button type="submit" class="submit-btn">Trimite Răspunsurile</button>
-      </form>
-      <div v-if="showResults" class="results">
-        <h2>Rezultatele Tale</h2>
-        <p>Răspunsurile tale au fost salvate! Mulțumim pentru participare.</p>
-      </div>
+        <button type="submit" class="submit-btn" @click.prevent="submitQuiz">Submit Answers</button>
+    </form>
     </div>
   </template>
   
   <script setup>
-  import { ref } from "vue";
-  import axios from "axios"; // Importă Axios
+  import { ref, onMounted } from "vue";
+  import { useRouter } from "vue-router"; // Import Vue Router
+  import axios from "axios";
   
-  const questions = ref([
-    {
-      text: "Cum îți începi dimineața de obicei?",
-      options: [
-        { text: "Cu o ceașcă mare de cafea și ceva dulce.", value: 1 },
-        { text: "Cu o alergare sau o scurtă sesiune de exerciții fizice.", value: 2 },
-        { text: "Cu un pahar mare de apă și planificarea zilei.", value: 3 },
-      ],
-    },
-    {
-      text: "Ce faci de obicei în pauzele de la lucru?",
-      options: [
-        { text: "Mănânc ceva rapid, de obicei un snack nesănătos.", value: 1 },
-        { text: "Fac o plimbare scurtă sau întindere.", value: 2 },
-        { text: "Îmi verific telefonul sau stau pe rețele sociale.", value: 3 },
-      ],
-    },
-    {
-      text: "Ce activitate te atrage cel mai mult pentru relaxare?",
-      options: [
-        { text: "Să citesc sau să mă uit la un film.", value: 1 },
-        { text: "Să încerc o activitate fizică nouă, cum ar fi înotul sau yoga.", value: 2 },
-        { text: "Să petrec timp în natură sau să beau o băutură sănătoasă.", value: 3 },
-      ],
-    },
-    {
-      text: "Cum îți gestionezi stresul de obicei?",
-      options: [
-        { text: "Îmi aprind o țigară sau mănânc ceva care mă face să mă simt bine temporar.", value: 1 },
-        { text: "Mă duc la sală sau fac mișcare intensă.", value: 2 },
-        { text: "Încerc tehnici de mindfulness, cum ar fi respirația controlată.", value: 3 },
-      ],
-    },
-    {
-      text: "Ce ți-ar plăcea să adaugi în rutina ta zilnică?",
-      options: [
-        { text: "Să reduc obiceiurile nesănătoase, cum ar fi fumatul sau gustările frecvente.", value: 1 },
-        { text: "Să fac mai mult sport și să am o viață activă.", value: 2 },
-        { text: "Să fiu mai hidratat și să am un stil de viață echilibrat.", value: 3 },
-      ],
-    },
-  ]);
+  const questions = ref([]);
+  const answers = ref([]);
+  const router = useRouter(); // Initialize router
   
-  const answers = ref(Array(questions.value.length).fill(null));
-  const showResults = ref(false);
+  // Convert index to letter (0 -> a, 1 -> b, 2 -> c, etc.)
+  function indexToLetter(index) {
+    return String.fromCharCode(97 + index); // 97 is the ASCII code for 'a'
+  }
   
+  // Fetch questions from the backend
+  async function fetchQuestions() {
+    try {
+      const response = await axios.get("http://localhost:8080/quiz");
+      questions.value = response.data;
+      answers.value = Array(questions.value.length).fill(null);
+    } catch (error) {
+      console.error("Error fetching questions:", error);
+    }
+  }
+  
+  // Submit answers to the backend
   async function submitQuiz() {
     if (answers.value.includes(null)) {
-      alert("Te rugăm să răspunzi la toate întrebările.");
+      alert("Please answer all questions.");
       return;
     }
   
-    // Creăm lista de răspunsuri
-    const numericAnswers = answers.value;
+    // Map selected indices to letters
+    const formattedAnswers = answers.value.map((index) => indexToLetter(index));
   
     try {
-      // Trimite răspunsurile la backend
-      const response = await axios.post("http://localhost:8080/quiz", {
-        answers: numericAnswers,
+      const response = await axios.post("http://localhost:8080/quiz/ai", formattedAnswers);
+      // Navigate to the recommendations page
+      console.log("should route");
+      
+      router.push({
+        path: "/recommendation",
+        query: { result: response.data }, // Optionally pass quiz results as query parameters
       });
-  
-      console.log("Răspuns trimis:", response.data);
-      showResults.value = true;
     } catch (error) {
-      console.error("Eroare la trimiterea răspunsurilor:", error);
+      console.error("Error submitting answers:", error);
     }
   }
+  
+  onMounted(fetchQuestions);
   </script>
   
   <style scoped>
-  /* Stiluri existente */
+  /* Styles remain unchanged */
   .quiz-container {
     max-width: 600px;
     margin: 50px auto;
@@ -111,7 +86,7 @@
     border-radius: 12px;
     background-color: #ffffff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    font-family: 'Arial', sans-serif;
+    font-family: "Arial", sans-serif;
     color: #333;
   }
   
@@ -171,21 +146,6 @@
   .submit-btn:active {
     background-color: #003f7f;
     transform: translateY(0);
-  }
-  
-  .results {
-    text-align: center;
-    margin-top: 30px;
-  }
-  
-  .results h2 {
-    font-size: 24px;
-    color: #28a745;
-  }
-  
-  .results p {
-    font-size: 16px;
-    color: #666;
   }
   </style>
   

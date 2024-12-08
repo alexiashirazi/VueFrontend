@@ -55,6 +55,8 @@
       if (response.data===true) {
         console.log(response.data)
         console.log("Login successful");
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("nickname", nickname.value);
 
         // Navighează la pagina de Home
         router.push("/");
@@ -96,7 +98,7 @@ body {
 h1 {
   margin-bottom: 20px;
   font-size: 28px;
-  color: #ff5e99; /* Pink */
+  color: #094e21; /* Pink */
   font-family: 'Arial', sans-serif;
   font-weight: bold;
 }
@@ -126,7 +128,7 @@ input {
 button {
   width: 100%;
   padding: 10px;
-  background: linear-gradient(90deg, #ff5e99, #ffde59); /* Pink to Yellow Gradient */
+  background: linear-gradient(90deg, #afe2ab, #538838); /* Light Green Gradient */
   color: white;
   border: none;
   border-radius: 6px;
@@ -137,14 +139,14 @@ button {
 }
 
 button:hover {
-  background: linear-gradient(90deg, #ffde59, #ff5e99); /* Yellow to Pink Gradient */
-  box-shadow: 0 4px 10px rgba(255, 94, 153, 0.5);
+    background: linear-gradient(90deg, #afe2ab, #538838); /* Light Green Gradient */
+    box-shadow: 0 4px 10px rgba(15, 85, 22, 0.5);
 }
 
 /* Error Message */
 .error-message {
   margin-top: 10px;
-  color: #ff5e99;
+  color: #08541e;
   font-size: 14px;
   font-weight: bold;
 }
@@ -161,14 +163,14 @@ button:hover {
 }
 
 .create-account a {
-  color: #ff5e99;
+  color: #53c69d;
   text-decoration: none;
   font-weight: bold;
 }
 
 .create-account a:hover {
   text-decoration: underline;
-  color: #ffde59; /* Yellow on hover */
+  color: #95eda4; /* Yellow on hover */
 }
 
 /* Responsive Design */

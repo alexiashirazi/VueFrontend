@@ -166,7 +166,7 @@ async function handleRegister() {
   h1 {
     margin-bottom: 20px;
     font-size: 28px;
-    color: #ff5e99; /* Pink */
+    color: #174616; /* Pink */
     font-weight: bold;
   }
   
@@ -195,12 +195,12 @@ async function handleRegister() {
   }
   
   input:focus {
-    border-color: #ff5e99; /* Pink focus color */
-    box-shadow: 0 0 5px rgba(255, 94, 153, 0.5);
+    border-color: #0d6d24; /* Pink focus color */
+    box-shadow: 0 0 5px rgba(27, 91, 26, 0.5);
   }
   
   input:hover {
-    border-color: #ffde59; /* Yellow hover color */
+    border-color: #6fff59; /* Yellow hover color */
   }
   
   /* Button Styles */
@@ -210,7 +210,7 @@ async function handleRegister() {
     font-size: 16px;
     font-weight: bold;
     color: white;
-    background: linear-gradient(90deg, #ff5e99, #ffde59); /* Pink to Yellow Gradient */
+    background: linear-gradient(90deg, #afe2ab, #538838); /* Light Green Gradient */
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -218,8 +218,8 @@ async function handleRegister() {
   }
   
   button:hover {
-    background: linear-gradient(90deg, #ffde59, #ff5e99); /* Yellow to Pink Gradient */
-    box-shadow: 0 4px 10px rgba(255, 94, 153, 0.5);
+    background: linear-gradient(90deg, #afe2ab, #538838); /* Light Green Gradient */
+    box-shadow: 0 4px 10px rgba(45, 111, 62, 0.5);
     transform: translateY(-2px);
   }
   
@@ -240,7 +240,7 @@ async function handleRegister() {
   }
   
   .error-message {
-    color: #dc3545;
+    color: #0c4922;
   }
   
   /* Responsive Design for Mobile */

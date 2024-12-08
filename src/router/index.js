@@ -7,6 +7,9 @@ import QuizView from '../views/QuizView.vue'
 import CalendarView from '../views/CalendarView.vue';
 import LeaderboardView from '../views/LeaderboardView.vue';
 import AboutView from '../views/AboutView.vue';
+import HomeUser from '../views/HomeUser.vue';
+import Contact from '@/views/Contact.vue';
+import Recommendation from '@/views/Recommendation.vue';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -51,6 +54,22 @@ const router = createRouter({
         name: 'about',
         component: AboutView,
     },
+
+    {
+      path: '/home1',
+      name:'home1',
+      component: HomeUser,
+    },
+    {
+      path: '/contact',
+      name:'contact',
+      component: Contact,
+    },
+    {
+      path: '/recommendation',
+      name: 'recommendation',
+      component:Recommendation,
+    }
     ],
 });
 

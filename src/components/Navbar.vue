@@ -1,32 +1,81 @@
 <template>
   <div>
-    <!-- First Navbar -->
-    <CNavbar expand="lg" class="custom-navbar">
+    <!-- Conditionally render the navbar based on login status -->
+    <CNavbar v-if="isLoggedIn" expand="lg" class="custom-navbar">
       <CContainer fluid>
+        <!-- Navbar Brand -->
         <CNavbarBrand href="/" class="custom-brand">APPNAME</CNavbarBrand>
-        <CNavbarToggler aria-label="Toggle navigation" aria-expanded="false" @click="visible = !visible"/>
+
+        <!-- Navbar Toggler -->
+        <CNavbarToggler
+          aria-label="Toggle navigation"
+          aria-expanded="false"
+          @click="visible = !visible"
+        />
+
+        <!-- Navbar Collapse -->
         <CCollapse class="navbar-collapse" :visible="visible">
-          <CNavbarNav>
+          <CNavbarNav class="ms-auto">
+            <!-- My Account Dropdown -->
+            <CDropdown variant="nav-item" class="custom-dropdown">
+              <CDropdownToggle class="custom-link">My Account</CDropdownToggle>
+              <CDropdownMenu>
+                <CDropdownItem href="/leaderboard">My Leaderboards</CDropdownItem>
+                <CDropdownItem href="/calendar">Calendar</CDropdownItem>
+                <CDropdownItem href="/my-prizes">My Prizes</CDropdownItem>
+                <CDropdownDivider />
+                <CDropdownItem href="/account-settings">Account Settings</CDropdownItem>
+              </CDropdownMenu>
+            </CDropdown>
+
+            <!-- Blog Link -->
             <CNavItem>
-              <CNavLink href="#" class="custom-link" active>About</CNavLink>
+              <CNavLink href="/blog" class="custom-link">Blog</CNavLink>
+            </CNavItem>
+
+            <!-- Contact Link -->
+            <CNavItem>
+              <CNavLink href="/contact" class="custom-link">Contact</CNavLink>
+            </CNavItem>
+
+            <!-- Log Out -->
+            <CNavItem>
+              <CNavLink class="custom-link" @click="handleLogout">Log Out</CNavLink>
+            </CNavItem>
+          </CNavbarNav>
+        </CCollapse>
+      </CContainer>
+    </CNavbar>
+
+    <!-- Default Navbar -->
+    <CNavbar v-else expand="lg" class="custom-navbar">
+      <CContainer fluid>
+        <!-- Navbar Brand -->
+        <CNavbarBrand href="/" class="custom-brand">APPNAME</CNavbarBrand>
+
+        <!-- Navbar Toggler -->
+        <CNavbarToggler
+          aria-label="Toggle navigation"
+          aria-expanded="false"
+          @click="visible = !visible"
+        />
+
+        <!-- Navbar Collapse -->
+        <CCollapse class="navbar-collapse" :visible="visible">
+          <CNavbarNav class="ms-auto">
+            <CNavItem>
+              <CNavLink href="/" class="custom-link">Home</CNavLink>
             </CNavItem>
             <CNavItem>
               <CNavLink href="/blog" class="custom-link">Blog</CNavLink>
             </CNavItem>
-            <CDropdown variant="nav-item" :popper="false" class="custom-dropdown">
-              <CDropdownToggle class="custom-dropdown-toggle">Home</CDropdownToggle>
-              <CDropdownMenu>
-                <CDropdownItem href="/login">Login</CDropdownItem>
-                <CDropdownItem href="#">Global LeaderBoards</CDropdownItem>
-                <CDropdownDivider />
-                <CDropdownItem href="#">Testimonials</CDropdownItem>
-              </CDropdownMenu>
-            </CDropdown>
+            <CNavItem>
+              <CNavLink href="/contact" class="custom-link">Contact</CNavLink>
+            </CNavItem>
+            <CNavItem>
+              <CNavLink href="/login" class="custom-link">Log In</CNavLink>
+            </CNavItem>
           </CNavbarNav>
-          <CForm class="d-flex custom-search">
-            <CFormInput type="search" class="me-2 custom-input" placeholder="Search Article"/>
-            <CButton type="submit" class="custom-button">Search</CButton>
-          </CForm>
         </CCollapse>
       </CContainer>
     </CNavbar>
@@ -34,33 +83,76 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { 
-  CNavbar, 
-  CContainer, 
-  CNavbarBrand, 
-  CNavbarToggler, 
-  CCollapse, 
-  CNavbarNav, 
-  CNavItem, 
-  CNavLink, 
-  CDropdown, 
-  CDropdownToggle, 
-  CDropdownMenu, 
-  CDropdownItem, 
-  CDropdownDivider, 
-  CForm, 
-  CFormInput, 
-  CButton 
-} from '@coreui/vue'
+import { ref, onMounted, watch } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import {
+  CNavbar,
+  CContainer,
+  CNavbarBrand,
+  CNavbarToggler,
+  CCollapse,
+  CNavbarNav,
+  CNavItem,
+  CNavLink,
+  CDropdown,
+  CDropdownToggle,
+  CDropdownMenu,
+  CDropdownItem,
+  CDropdownDivider,
+} from "@coreui/vue";
 
-const visible = ref(true)
+// State to track the visibility of the navbar collapse
+const visible = ref(false);
+
+// State to track login status
+const isLoggedIn = ref(false);
+
+// Router and Route instances
+const router = useRouter();
+const route = useRoute();
+
+// Fetch login status from localStorage
+onMounted(() => {
+  isLoggedIn.value = localStorage.getItem("isLoggedIn") === "true";
+});
+
+// Watch for route changes to refresh data or reset components
+watch(
+  () => route.fullPath,
+  (newPath, oldPath) => {
+    console.log(`Route changed from ${oldPath} to ${newPath}`);
+    // Refresh any necessary data here
+    handleRouteChange(newPath);
+  }
+);
+
+// Handle data or state updates on route change
+function handleRouteChange(newPath) {
+  // For example, refresh the login state
+  isLoggedIn.value = localStorage.getItem("isLoggedIn") === "true";
+
+  // Perform additional actions like clearing specific states if needed
+  console.log("Route changed, performing auto-refresh");
+}
+
+// Logout function
+function handleLogout() {
+  // Clear login-related data from localStorage
+  localStorage.removeItem("isLoggedIn");
+  localStorage.removeItem("nickname");
+
+  // Redirect to the login page
+  router.push("/login");
+
+  // Update state
+  isLoggedIn.value = false;
+}
 </script>
 
 <style scoped>
 /* Custom Navbar Styling */
 .custom-navbar {
-  background: linear-gradient(90deg, #ff5e99, #ffde59); /* Pink to Yellow Gradient */
+  background: linear-gradient(90deg, #afe2ab, #538838); /* Gradient background */
   color: white;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -73,29 +165,15 @@ const visible = ref(true)
   color: white;
 }
 
-.custom-brand:hover {
-  text-decoration: none;
-  color: #fdfdfd;
-}
-
 .custom-link {
   color: white;
   font-weight: bold;
-  margin-right: 1rem;
+  margin: 0 1rem;
 }
 
 .custom-link:hover {
   color: #fdfdfd;
   text-decoration: underline;
-}
-
-.custom-dropdown-toggle {
-  color: white;
-  font-weight: bold;
-}
-
-.custom-dropdown-toggle:hover {
-  color: #fdfdfd;
 }
 
 .custom-dropdown .dropdown-menu {
@@ -106,38 +184,11 @@ const visible = ref(true)
 }
 
 .custom-dropdown .dropdown-menu .dropdown-item:hover {
-  background-color: #ffde59;
+  background-color: #afe2ab;
   color: black;
 }
 
-.custom-search {
-  align-items: center;
-}
-
-.custom-input {
-  border-radius: 8px;
-  border: 1px solid #ffde59;
-  padding: 0.5rem;
-}
-
-.custom-input:focus {
-  outline: none;
-  border-color: #ff5e99;
-  box-shadow: 0 0 5px rgba(255, 94, 153, 0.5);
-}
-
-.custom-button {
-  background: linear-gradient(90deg, #ff5e99, #ffde59);
-  color: white;
-  border-radius: 8px;
-  border: none;
-  font-weight: bold;
-  padding: 0.5rem 1rem;
-}
-
-.custom-button:hover {
-  background: linear-gradient(90deg, #ffde59, #ff5e99);
-  box-shadow: 0 4px 8px rgba(255, 94, 153, 0.5);
-  transform: translateY(-2px);
+.ms-auto {
+  margin-left: auto; /* Align items to the right */
 }
 </style>

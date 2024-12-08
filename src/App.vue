@@ -1,21 +1,21 @@
-<script setup>
-import {RouterView} from 'vue-router'
-import Navbar from './components/Navbar.vue'
-import BlogSection from './components/BlogSection.vue'
-</script>
-
 <template>
   <div id="app">
-    <!-- Navbar is imported as a global reusable component -->
-    <Navbar/>
-    <RouterView/>
+    <!-- Global Navbar -->
+    <Navbar />
+
+    <!-- Routed Content -->
+    <RouterView />
   </div>
 </template>
 
+<script setup>
+import Navbar from "./components/Navbar.vue"; // Path to the Navbar component
+</script>
+
 <style>
-/* Global styles */
+/* Optional global styles */
 body {
   margin: 0;
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
 }
 </style>

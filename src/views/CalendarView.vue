@@ -1,43 +1,76 @@
 <template>
-    <div class="calendar-container">
-      <h2 class="calendar-title">Monthly Habit Tracker</h2>
-      <div class="month-navigation">
-        <button class="nav-button" @click="prevMonth">❮</button>
-        <h3 class="month">{{ currentMonthName }} {{ currentYear }}</h3>
-        <button class="nav-button" @click="nextMonth">❯</button>
+    <div class="calendar-wrapper">
+      <!-- Motivational Quotes - Left -->
+      <div class="quotes left">
+        <p v-for="(quote, index) in leftQuotes" :key="'left-' + index" class="quote">
+          {{ quote }}
+        </p>
       </div>
-      <div class="calendar-grid">
-        <!-- Header pentru zilele săptămânii -->
-        <div v-for="(day, index) in daysOfWeek" :key="index" class="day-header">
-          {{ day }}
-        </div>
   
-        <!-- Zilele lunii -->
-        <div
-          v-for="(day, index) in calendarDays"
-          :key="index"
-          class="day-cell"
-          :class="day.status"
-          @mouseover="hoverDate = index"
-          @mouseleave="hoverDate = null"
-        >
-          <span v-if="day.date" class="date-number">{{ day.date }}</span>
-          <!-- Butoane ascunse -->
-          <div v-if="hoverDate === index && day.date" class="buttons">
-            <button @click="markAsInProgress(index)">⏳</button>
-            <button @click="markAsDone(index)">✔️</button>
-            <button @click="markAsInvalid(index)">❌</button>
+      <!-- Calendar -->
+      <div class="calendar-container">
+        <h2 class="calendar-title">Monthly Habit Tracker</h2>
+        <div class="month-navigation">
+          <button class="nav-button" @click="prevMonth">❮</button>
+          <h3 class="month">{{ currentMonthName }} {{ currentYear }}</h3>
+          <button class="nav-button" @click="nextMonth">❯</button>
+        </div>
+        <div class="calendar-grid">
+          <!-- Header for days of the week -->
+          <div v-for="(day, index) in daysOfWeek" :key="index" class="day-header">
+            {{ day }}
+          </div>
+  
+          <!-- Days of the month -->
+          <div
+            v-for="(day, index) in calendarDays"
+            :key="index"
+            class="day-cell"
+            :class="day.status"
+            @mouseover="hoverDate = index"
+            @mouseleave="hoverDate = null"
+          >
+            <span v-if="day.date" class="date-number">{{ day.date }}</span>
+            <!-- Hidden buttons -->
+            <div v-if="hoverDate === index && day.date" class="buttons">
+              <button @click="markAsDone(index)">✔️</button>
+              <button @click="markAsInvalid(index)">❌</button>
+            </div>
           </div>
         </div>
       </div>
+  
+      <!-- Motivational Quotes - Right -->
+      <div class="quotes right">
+        <p v-for="(quote, index) in rightQuotes" :key="'right-' + index" class="quote">
+          {{ quote }}
+        </p>
+      </div>
     </div>
   </template>
+  
   
   <script setup>
   import { ref, computed } from "vue";
   import dayjs from "dayjs";
   import axios from "axios";
   
+  // Motivational Quotes
+  const quotes = [
+    "A little progress each day adds up to big results.",
+    "Don't watch the clock; do what it does. Keep going.",
+    "You don't have to be perfect to make progress.",
+    "Discipline is the bridge between goals and accomplishment.",
+    "Small steps every day lead to big changes.",
+    "Push yourself because no one else is going to do it for you.",
+    "Habit is what keeps you going when motivation runs out.",
+  ];
+  
+  // Split quotes into left and right arrays
+  const leftQuotes = quotes.slice(0, Math.ceil(quotes.length / 2));
+  const rightQuotes = quotes.slice(Math.ceil(quotes.length / 2));
+  
+  // Calendar setup
   const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const hoverDate = ref(null);
   
@@ -48,7 +81,6 @@
     dayjs().month(currentMonth.value).format("MMMM")
   );
   
-  // Generăm zilele calendarului
   const calendarDays = computed(() => {
     const daysInMonth = dayjs()
       .year(currentYear.value)
@@ -60,7 +92,7 @@
       .date(1)
       .day();
   
-    const emptyDays = (firstDayOfMonth + 6) % 7; // Ajustare pentru luni
+    const emptyDays = (firstDayOfMonth + 6) % 7;
     const days = Array(emptyDays)
       .fill({ date: null, status: "empty" })
       .concat(
@@ -72,17 +104,9 @@
     return days;
   });
   
-  // Funcții pentru schimbarea statusului
-  async function markAsInProgress(index) {
-    if (calendarDays.value[index]?.date) {
-      calendarDays.value[index].status = "in-progress";
-      await syncWithBackend();
-    }
-  }
-  
   async function markAsDone(index) {
     if (calendarDays.value[index]?.date) {
-      calendarDays.value[index].status = "done";
+      calendarDays.value[index].status = "in-progress";
       await syncWithBackend();
     }
   }
@@ -94,21 +118,20 @@
     }
   }
   
-  // Sincronizare cu backend
   async function syncWithBackend() {
     const stateVector = calendarDays.value.map((day) => {
       if (day.status === "done") return 2;
       if (day.status === "in-progress") return 1;
       if (day.status === "invalid") return 0;
-      return -1; // Zile goale
+      return -1;
     });
   
     try {
-      await axios.post("/api/leaderboard/sync", {
-        year: currentYear.value,
-        month: currentMonth.value + 1, // Backend-ul așteaptă 1-based (1 = January)
-        stateVector,
-      });
+      const response = await axios.post(
+        "http://localhost:8080/api/leaderboard/score",
+        stateVector
+      );
+      console.log("Sync successful:", response.data);
     } catch (error) {
       console.error("Sync failed:", error);
     }
@@ -135,15 +158,61 @@
   }
   </script>
   
-  
+
   <style scoped>
-  /* (Stilurile rămân aceleași ca mai sus) */
+  /* Wrapper for the calendar and quotes */
+  .calendar-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    font-family: "Arial", sans-serif;
+  }
+  
+  /* Quotes Section */
+  .quotes {
+    width: 200px;
+    font-size: 16px;
+    color: #333;
+    line-height: 1.8;
+    font-family: "Georgia", serif;
+  }
+  
+  .quotes.left {
+    text-align: right;
+    border-right: 2px solid #ddd;
+    padding-right: 15px;
+  }
+  
+  .quotes.right {
+    text-align: left;
+    border-left: 2px solid #ddd;
+    padding-left: 15px;
+  }
+  
+  .quote {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 8px;
+    background: linear-gradient(145deg, #eafaf1, #d5e8e0);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    font-style: italic;
+    color: #094e21;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .quote:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Calendar Container */
   .calendar-container {
     width: 100%;
     max-width: 600px;
-    margin: 0 auto;
     text-align: center;
-    font-family: Arial, sans-serif;
   }
   
   .calendar-title {
@@ -160,7 +229,6 @@
   
   .month {
     font-size: 1.5rem;
-    margin: 0;
   }
   
   .nav-button {
@@ -168,30 +236,31 @@
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
-    color: #333;
-    transition: color 0.3s;
   }
   
   .nav-button:hover {
     color: #007bff;
   }
   
+  /* Calendar Grid */
   .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 8px;
   }
   
+  /* Day Header */
   .day-header {
     font-weight: bold;
     text-transform: uppercase;
     color: #333;
   }
   
+  /* Day Cell */
   .day-cell {
-    position: relative;
     width: 100%;
-    padding-top: 100%;
+    padding-top: 100%; /* Maintain square aspect ratio */
+    position: relative;
     background-color: #f0f0f0;
     border-radius: 8px;
     overflow: hidden;
@@ -211,6 +280,7 @@
     color: #333;
   }
   
+  /* Buttons for Day Cell */
   .buttons {
     position: absolute;
     bottom: 10%;
@@ -235,24 +305,40 @@
     background-color: #0056b3;
   }
   
+  /* Day Status Styles */
   .day-cell.done {
-    background-color: rgb(103, 168, 122);
+    background-color: #075427; /* Green */
     color: white;
   }
   
   .day-cell.in-progress {
-    background-color: yellow;
+    background-color: #ffeb3b; /* Yellow */
     color: black;
   }
   
-  .day-cell.not-entered {
-    background-color: grey;
+  .day-cell.invalid {
+    background-color: #cd7878; /* Red */
     color: white;
   }
   
-  .day-cell.invalid {
-    background-color: rgb(205, 120, 120);
+  .day-cell.not-entered {
+    background-color: #ddd; /* Light Gray */
     color: white;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .calendar-wrapper {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .quotes {
+      width: 100%;
+      text-align: center;
+      border: none;
+      padding: 0;
+    }
   }
   </style>
   

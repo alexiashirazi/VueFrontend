@@ -1,69 +1,55 @@
-<script setup>
-const plans = [
-  {
-    title: 'Monthly Flow',
-    subtitle: 'Flexible & unlimited access to design services with a hyperfast turnaround time.',
-    price: '£5,000/m',
-    buttonText: 'Get Started',
-    highlight: true, // To show "MOST POPULAR" badge
-  },
-  {
-    title: 'Quarterly Stream',
-    subtitle: 'Save £500 per month. Billed quarterly.',
-    price: '£4,500/m',
-    buttonText: 'Get Started',
-  },
-  {
-    title: 'Pro-flow',
-    subtitle: 'Double design requests with a hyperfast turnaround time.',
-    price: '£8,000/m',
-    buttonText: 'Get Started',
-    highlight: '2x the requests', // Custom badge text
-  },
-  {
-    title: 'Talk it through',
-    subtitle: 'Need to talk through Hyperflow in detail? Schedule a call with us today.',
-    buttonText: 'Book a Call',
-  },
-  {
-    title: 'Roast your site',
-    subtitle: 'Need some quick wins for improving your landing page, app, or website?',
-    buttonText: 'Roast us',
-  },
-  {
-    title: 'Refer a client',
-    subtitle: 'Earn 5% monthly recurring commission for each referral.',
-    buttonText: 'Join now',
-  },
-]
-</script>
-
 <template>
   <section class="blog-section">
-    <h2 class="section-heading">Our Fluid Plans</h2>
-    <div class="plans-grid">
-      <div
-        v-for="(plan, index) in plans"
-        :key="index"
-        class="plan-card"
-        :class="{ highlight: plan.highlight }"
-      >
-        <!-- Highlight Badge -->
-        <div v-if="plan.highlight" class="badge">
-          {{ plan.highlight === true ? 'MOST POPULAR' : plan.highlight }}
-        </div>
+    <h2 class="section-heading">Habits & Productivity Insights</h2>
+    <div class="articles-grid">
+      <!-- Article 1 (Index 0) -->
+      <div class="article-card article-card-0">
+        <h3 class="article-title">Overcoming Procrastination</h3>
+        <p class="article-subtitle">Learn simple strategies...</p>
+        <a href="#" class="article-button">Read More</a>
+      </div>
 
-        <!-- Title -->
-        <h3 class="plan-title">{{ plan.title }}</h3>
+      <!-- Article 2 (Index 1, highlighted) -->
+      <div class="article-card article-card-1 highlight">
+        <div class="badge">TOP TRENDING</div>
+        <h3 class="article-title">Consistency is Key</h3>
+        <p class="article-subtitle">Habits stick when we show up daily...</p>
+        <a href="#" class="article-button">Read More</a>
+      </div>
 
-        <!-- Subtitle -->
-        <p class="plan-subtitle">{{ plan.subtitle }}</p>
+      <!-- Article 3 (Index 2) -->
+      <div class="article-card article-card-2">
+        <h3 class="article-title">The Power of Journaling</h3>
+        <p class="article-subtitle">Develop self-awareness...</p>
+        <a href="#" class="article-button">Read More</a>
+      </div>
 
-        <!-- Price -->
-        <p v-if="plan.price" class="plan-price">{{ plan.price }}</p>
+      <!-- Article 4 (Index 3) -->
+      <div class="article-card article-card-3">
+        <h3 class="article-title">The Art of Single-Tasking</h3>
+        <p class="article-subtitle">Boost productivity by focusing...</p>
+        <a href="#" class="article-button">Read More</a>
+      </div>
 
-        <!-- Button -->
-        <a href="#" class="plan-button">{{ plan.buttonText }}</a>
+      <!-- Article 5 (Index 4) -->
+      <div class="article-card article-card-4">
+        <h3 class="article-title">Habit Formation Science</h3>
+        <p class="article-subtitle">Understand the psychology behind habit loops...</p>
+        <a href="#" class="article-button">Read More</a>
+      </div>
+
+      <!-- Article 6 (Index 5) -->
+      <div class="article-card article-card-5">
+        <h3 class="article-title">Digital Detox for Better Focus</h3>
+        <p class="article-subtitle">Learn to set boundaries with technology...</p>
+        <a href="#" class="article-button">Read More</a>
+      </div>
+
+      <!-- Article 7 (Index 6) -->
+      <div class="article-card article-card-6">
+        <h3 class="article-title">Reflecting on Daily Wins</h3>
+        <p class="article-subtitle">Build confidence and motivation...</p>
+        <a href="#" class="article-button">Read More</a>
       </div>
     </div>
   </section>
@@ -73,43 +59,101 @@ const plans = [
 /* Blog Section */
 .blog-section {
   padding: 4rem 2rem;
-  background-color: #0d0c12;
+  background: linear-gradient(90deg, #afe2ab, #538838);
   color: white;
   text-align: center;
+  animation: fadeInSection 1.5s ease-in-out;
+}
+
+@keyframes fadeInSection {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .section-heading {
-  font-size: 2rem;
-  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
   color: #ffffff;
+  animation: slideInDown 1s ease-out;
 }
 
-/* Plans Grid */
-.plans-grid {
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Grid for Articles */
+.articles-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
 }
 
-/* Plan Card */
-.plan-card {
+/* Article Card */
+/* Ensure the highlight card is visible */
+.article-card.highlight {
+  border: 2px solid #00ffaf;
+  background: linear-gradient(145deg, rgba(0, 255, 175, 0.2), rgba(0, 255, 175, 0.1));
+  animation: pulseHighlight 2s infinite, fadeInCard 1s ease-out forwards; /* Combined animations */
+  z-index: 1; /* Ensure it's above other cards */
+  opacity: 1 !important; /* Ensure the opacity is applied correctly */
+  transform: translateY(0) !important; /* Ensure the transform is properly applied */
+}
+
+.article-card {
   position: relative;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.2));
   padding: 2rem;
   border-radius: 12px;
   text-align: left;
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition: transform 0.4s, box-shadow 0.4s;
+  opacity: 0; /* Initial opacity */
+  transform: translateY(20px); /* Initial position */
+  animation: fadeInCard 1s ease-out forwards; /* Make sure forwards is applied */
+  animation-fill-mode: forwards; /* Ensure final frame persists */
 }
 
-.plan-card.highlight {
-  border: 2px solid #00ffaf;
-  background: linear-gradient(145deg, rgba(0, 255, 175, 0.1), rgba(0, 255, 175, 0));
+@keyframes fadeInCard {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
+
+@keyframes pulseHighlight {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+
 
 /* Hover Effect */
-.plan-card:hover {
+.article-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 15px #538838;
 }
 
 /* Badge */
@@ -123,33 +167,40 @@ const plans = [
   border-radius: 20px;
   font-size: 0.8rem;
   font-weight: bold;
+  animation: bounceIn 1.5s ease-out;
 }
 
-/* Plan Title */
-.plan-title {
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Article Title */
+.article-title {
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
   color: white;
 }
 
-/* Plan Subtitle */
-.plan-subtitle {
+/* Article Subtitle */
+.article-subtitle {
   font-size: 1rem;
   line-height: 1.5;
   margin-bottom: 1.5rem;
   color: #ccc;
 }
 
-/* Plan Price */
-.plan-price {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #ffffff;
-  margin-bottom: 1.5rem;
-}
-
-/* Plan Button */
-.plan-button {
+/* Button */
+.article-button {
   display: inline-block;
   text-align: center;
   padding: 0.8rem 1.5rem;
@@ -159,11 +210,14 @@ const plans = [
   border-radius: 8px;
   text-decoration: none;
   font-weight: bold;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.3s;
 }
 
-.plan-button:hover {
+.article-button:hover {
   background-color: #00d68f;
- 
+  transform: scale(1.1);
+  box-shadow: 0 0 10px #00ffaf;
 }
+
+
 </style>

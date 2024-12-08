@@ -78,7 +78,7 @@
 /* Hero Section */
 .hero-section {
   position: relative;
-  background: linear-gradient(90deg, #ff5e99, #ffde59);
+  background: linear-gradient(90deg, #afe2ab, #538838); /* Light Green Gradient */
   color: white;
   text-align: center;
   padding: 80px 20px;
@@ -118,7 +118,7 @@
 .section-heading {
   font-size: 2.5rem;
   font-weight: bold;
-  color: #ff5e99;
+  background: linear-gradient(90deg, #afe2ab, #538838); /* Light Green Gradient */
   margin-bottom: 20px;
   animation: fade-in 1s ease-in-out;
 }
@@ -133,7 +133,7 @@
 .animated-line {
   width: 60px;
   height: 4px;
-  background: #ff5e99;
+  background: #092b09;
   margin: 10px auto;
   animation: expand-line 0.7s ease-out;
 }
@@ -178,7 +178,7 @@
 .team-name {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #ff5e99;
+  color: #34835e;
   margin-bottom: 5px;
 }
 
@@ -197,7 +197,7 @@
 /* Footer Section */
 .footer-section {
   position: relative;
-  background: #ffde59;
+  background: linear-gradient(90deg, #afe2ab, #538838); /* Light Green Gradient */
   text-align: center;
   padding: 60px 20px;
 }

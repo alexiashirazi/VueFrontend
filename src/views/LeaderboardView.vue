@@ -12,12 +12,18 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="user in users" :key="user.userId" :class="{ 'current-user': user.isCurrentUser }">
+            <tr
+              v-for="user in users"
+              :key="user.userId"
+              :class="{ 'current-user': user.nickname === loggedInNickname }"
+            >
               <td>{{ user.rank }}</td>
               <td>{{ user.nickname }}</td>
               <td>{{ user.score }}</td>
               <td>
-                <span :class="getStatusClass(user.status)">{{ getStatusLabel(user.status) }}</span>
+                <span :class="getStatusClass(user.status)">
+                  {{ getStatusLabel(user.status) }}
+                </span>
               </td>
             </tr>
           </tbody>
@@ -33,28 +39,30 @@
   // Reactive state to store leaderboard data
   const users = ref([]);
   
-  // Generate leaderboard and fetch updated data
-  async function syncLeaderboard() {
+  // Retrieve the logged-in user's nickname from localStorage
+  const loggedInNickname = ref(localStorage.getItem("nickname"));
+  
+  // Fetch leaderboard data
+  async function fetchLeaderboard() {
     try {
-      // Call the backend to generate and save the leaderboard
-      const response = await axios.post("http://localhost:8080/api/leaderboard");
-      // Update the users array with the new leaderboard data
+      const response = await axios.get("http://localhost:8080/api/leaderboard");
       users.value = response.data.map((user, index) => ({
-        rank: index + 1, // Add rank based on order
+        rank: index + 1, // Assign rank based on order
         userId: user.userId,
         nickname: user.nickname,
         score: user.score,
         status: user.status,
-        isCurrentUser: user.isCurrentUser,
+        isCurrentUser: user.nickname === loggedInNickname.value, // Mark as current user
       }));
+      console.log("Leaderboard fetched:", users.value);
     } catch (error) {
-      console.error("Failed to sync leaderboard:", error);
+      console.error("Failed to fetch leaderboard:", error);
     }
   }
   
-  // Automatically sync leaderboard when the component is mounted
+  // Fetch leaderboard on component mount
   onMounted(() => {
-    syncLeaderboard();
+    fetchLeaderboard();
   });
   
   // Helper functions to map status values to labels and styles
@@ -91,7 +99,7 @@
     max-width: 800px;
     margin: 50px auto;
     padding: 20px;
-    background: linear-gradient(90deg, #ff5e99, #ffde59); /* Gradient background */
+    background: linear-gradient(90deg, #afe2ab, #538838); /* Light Green Gradient */
     border-radius: 12px;
     text-align: center;
     color: white;
@@ -108,11 +116,12 @@
   }
   
   thead {
-    background: #ff5e99;
+    background: #1e7937;
     color: white;
   }
   
-  th, td {
+  th,
+  td {
     padding: 15px;
     text-align: center;
     font-size: 14px;
@@ -127,17 +136,19 @@
   }
   
   tbody tr:hover {
-    background: #ffe6c1;
+    background: #c9faaa;
   }
   
+  /* Highlight Logged-In User */
   .current-user {
     font-weight: bold;
-    color: #ff5e99;
+    background-color: #82d09d;
+    color: #073812;
   }
   
   /* Status Labels */
   .status-pending {
-    color: #ff9900; /* Orange */
+    color: #b0ef8d; /* Orange */
     font-weight: bold;
   }
   
@@ -156,3 +167,4 @@
     font-weight: bold;
   }
   </style>
+  
