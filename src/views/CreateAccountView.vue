@@ -1,77 +1,83 @@
 <template>
-    <div class="register-container">
-      <h1>Create Account</h1>
-      <form @submit.prevent="handleRegister">
-        <div class="form-group">
-          <label for="nickname">Nickname</label>
-          <input
-            type="text"
-            id="nickname"
-            v-model="nickname"
-            placeholder="Enter your nickname"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="firstName">First Name</label>
-          <input
-            type="text"
-            id="firstName"
-            v-model="firstName"
-            placeholder="Enter your first name"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="lastName">Last Name</label>
-          <input
-            type="text"
-            id="lastName"
-            v-model="lastName"
-            placeholder="Enter your last name"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            v-model="email"
-            placeholder="Enter your email"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            v-model="password"
-            placeholder="Enter your password"
-            required
-          />
-        </div>
-        <button type="submit">Register</button>
-      </form>
-      <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
-      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+    <div class="page-container">
+      <div class="register-container">
+        <h1>Create Account</h1>
+        <form @submit.prevent="handleRegister">
+          <div class="form-group">
+            <label for="nickname">Nickname</label>
+            <input
+              type="text"
+              id="nickname"
+              v-model="nickname"
+              placeholder="Enter your nickname"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input
+              type="text"
+              id="firstName"
+              v-model="firstName"
+              placeholder="Enter your first name"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input
+              type="text"
+              id="lastName"
+              v-model="lastName"
+              placeholder="Enter your last name"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              v-model="email"
+              placeholder="Enter your email"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              v-model="password"
+              placeholder="Enter your password"
+              required
+            />
+          </div>
+          <button type="submit">Register</button>
+        </form>
+        <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
+        <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+      </div>
     </div>
   </template>
   
   <script setup>
-  import { ref } from "vue";
-  import axios from "axios";
-  
-  const nickname = ref("");
-  const firstName = ref("");
-  const lastName = ref("");
-  const email = ref("");
-  const password = ref("");
-  const successMessage = ref("");
-  const errorMessage = ref("");
-  
-  async function handleRegister() {
+import { ref } from "vue";
+import { useRouter } from "vue-router"; // Importă useRouter
+import axios from "axios";
+
+const nickname = ref("");
+const firstName = ref("");
+const lastName = ref("");
+const email = ref("");
+const password = ref("");
+const successMessage = ref("");
+const errorMessage = ref("");
+
+// Inițializează router-ul
+const router = useRouter();
+
+async function handleRegister() {
   try {
     const response = await axios.post("http://localhost:8080/api/users/register", {
       nickname: nickname.value,
@@ -85,6 +91,8 @@
       successMessage.value = "Account created successfully!";
       errorMessage.value = "";
       clearForm();
+      // Navighează la pagina Quiz
+      router.push("/quiz");
     } else {
       errorMessage.value = "Registration failed. Nickname might be taken.";
       successMessage.value = "";
@@ -107,44 +115,67 @@
   </script>
   
   <style scoped>
-  /* Stiluri pentru container */
-  body {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background-color: #f5f5f5; /* Adaugă o culoare de fundal subtilă */
+  /* General Page Background */
+
+  .page-container {
+  display: flex; /* Activează Flexbox */
+  justify-content: center; /* Centrează pe orizontală */
+  align-items: center; /* Centrează pe verticală */
+  min-height: 100vh; /* Întindere completă pe înălțime */
+  background: url('@/components/pngs/loginbg.png') no-repeat center center fixed; /* Imagine fundal */
+  background-size: cover; /* Fundal adaptat */
 }
 
+/* Register Container */
 .register-container {
   max-width: 400px;
   width: 100%;
-  margin: 0; /* Elimină margin pentru a folosi centrare completă */
   padding: 30px;
   border-radius: 12px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: white; /* Fundal alb */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Umbră */
   text-align: center;
-  font-family: 'Arial', sans-serif;
 }
+
+
+  body {
+    margin: 0;
+    padding: 0;
+    display: flex; /* Enables Flexbox */
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically */
+    min-height: 100vh; /* Ensures full-page height */
+    background: url('@/components/pngs/loginbg.png') no-repeat center center fixed; /* Background image */
+    background-size: cover; /* Ensures the image covers the full page */
+  }
   
-  /* Titlu */
+  
+  /* Register Container */
+  .register-container {
+    max-width: 400px;
+    width: 100%;
+    margin: 20px;
+    padding: 30px;
+    border-radius: 12px;
+    background-color: white; /* Keep container white */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+  }
+  
+  /* Heading */
   h1 {
     margin-bottom: 20px;
     font-size: 28px;
-    color: #333;
-    font-weight: 600;
+    color: #174616; /* Pink */
+    font-weight: bold;
   }
   
-  /* Grupuri de form */
+  /* Form Group */
   .form-group {
     margin-bottom: 20px;
     text-align: left;
   }
   
-  /* Etichete */
   label {
     display: block;
     margin-bottom: 8px;
@@ -153,52 +184,50 @@
     font-size: 14px;
   }
   
-  /* Câmpuri de intrare */
   input {
     width: 100%;
     padding: 12px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 6px;
-    transition: border-color 0.3s, box-shadow 0.3s;
     background-color: #fff;
-    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
   }
   
   input:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    border-color: #0d6d24; /* Pink focus color */
+    box-shadow: 0 0 5px rgba(27, 91, 26, 0.5);
   }
   
   input:hover {
-    border-color: #555;
+    border-color: #6fff59; /* Yellow hover color */
   }
   
-  /* Buton */
+  /* Button Styles */
   button {
     width: 100%;
     padding: 12px;
     font-size: 16px;
     font-weight: bold;
     color: white;
-    background-color: #007bff;
+    background: linear-gradient(90deg, #afe2ab, #538838); /* Light Green Gradient */
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
+    transition: all 0.3s ease-in-out;
   }
   
   button:hover {
-    background-color: #0056b3;
+    background: linear-gradient(90deg, #afe2ab, #538838); /* Light Green Gradient */
+    box-shadow: 0 4px 10px rgba(45, 111, 62, 0.5);
     transform: translateY(-2px);
   }
   
   button:active {
-    background-color: #003f7f;
     transform: translateY(0);
   }
   
-  /* Mesaje de succes și eroare */
+  /* Success and Error Messages */
   .success-message,
   .error-message {
     margin-top: 20px;
@@ -211,10 +240,10 @@
   }
   
   .error-message {
-    color: #dc3545;
+    color: #0c4922;
   }
   
-  /* Efecte media queries pentru mobile */
+  /* Responsive Design for Mobile */
   @media (max-width: 480px) {
     .register-container {
       padding: 20px;

@@ -2,16 +2,17 @@
 import ExplorePlans from "@/components/ExplorePlans.vue"; // Importă componenta ExplorePlans
 import AboutViewVue from "./AboutView.vue";
 import Testimonials from "../components/Testimonials.vue";
+
 </script>
 
 <template>
+    <Navbar />
   <!-- Hero Section -->
-   <NavBar/>
   <section class="hero-section">
     <div class="hero-content">
       <h1 class="hero-title">Welcome to Our Fluid Plans</h1>
       <p class="hero-subtitle">
-        Explore flexible and unlimited design services that fit your needs.
+        suga pu;a flexible and unlimited design services that fit your needs.
         Whether you're starting out or scaling up, we've got the perfect plan for you.
       </p>
       <!-- Anchor Link for Scrolling -->
@@ -40,23 +41,14 @@ import Testimonials from "../components/Testimonials.vue";
 .hero-section {
   position: relative;
   height: 70vh;
-  background: linear-gradient(90deg, #afe2ab, #538838); /* Matching gradient */
+  /*background-color: black; /* Set background to black */
+  background-image: url('@/components/pngs/herobg.png'); /* Replace 'your-image-name.png' with your file name */
   background-size: cover;
   background-position: center;
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
-  animation: backgroundMove 10s infinite linear; /* Subtle background movement */
-}
-
-@keyframes backgroundMove {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 100% 50%;
-  }
 }
 
 .hero-content {
@@ -64,18 +56,6 @@ import Testimonials from "../components/Testimonials.vue";
   background-color: rgba(0, 0, 0, 0.6); /* Transparent dark background */
   padding: 2rem;
   border-radius: 12px;
-  animation: fadeIn 1.5s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .hero-title {
@@ -83,18 +63,6 @@ import Testimonials from "../components/Testimonials.vue";
   font-weight: bold;
   margin-bottom: 1rem;
   color: white;
-  animation: slideInLeft 1.2s ease-out;
-}
-
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-100%);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
 }
 
 .hero-subtitle {
@@ -102,18 +70,6 @@ import Testimonials from "../components/Testimonials.vue";
   line-height: 1.5;
   margin-bottom: 1.5rem;
   color: #ddd;
-  animation: slideInRight 1.2s ease-out;
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(100%);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
 }
 
 .cta-button {
@@ -125,27 +81,11 @@ import Testimonials from "../components/Testimonials.vue";
   border-radius: 8px;
   text-decoration: none;
   font-weight: bold;
-  transition: background-color 0.3s, transform 0.3s;
-  animation: bounceIn 1.5s ease-out;
-}
-
-@keyframes bounceIn {
-  0% {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-  }
+  transition: background-color 0.3s;
 }
 
 .cta-button:hover {
   background-color: #00d68f;
-  transform: translateY(-5px);
 }
 
 /* Blog Section */
@@ -153,7 +93,6 @@ import Testimonials from "../components/Testimonials.vue";
   font-size: 2rem;
   margin-bottom: 2rem;
   color: white;
-  animation: fadeIn 1.5s ease-in-out;
 }
 
 .plans-grid {
@@ -164,25 +103,16 @@ import Testimonials from "../components/Testimonials.vue";
 
 .plan-card {
   position: relative;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)); /* Subtle gradient for depth */
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
   padding: 2rem;
   border-radius: 12px;
   text-align: left;
   transition: transform 0.3s, box-shadow 0.3s;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInCard 1s ease-out forwards;
 }
 
-@keyframes fadeInCard {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.plan-card.highlight {
+  border: 2px solid #00ffaf;
+  background: linear-gradient(145deg, rgba(0, 255, 175, 0.1), rgba(0, 255, 175, 0));
 }
 
 .plan-card:hover {
@@ -190,22 +120,16 @@ import Testimonials from "../components/Testimonials.vue";
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
 }
 
-.plan-card.highlight {
-  border: 2px solid #00ffaf;
-  background: linear-gradient(145deg, rgba(0, 255, 175, 0.1), rgba(0, 255, 175, 0)); /* Highlighted effect */
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
+.badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background-color: #00ffaf;
+  color: #000;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
 }
 
 .plan-title {
@@ -238,11 +162,10 @@ import Testimonials from "../components/Testimonials.vue";
   border-radius: 8px;
   text-decoration: none;
   font-weight: bold;
-  transition: background-color 0.3s, transform 0.3s;
+  transition: background-color 0.3s;
 }
 
 .plan-button:hover {
   background-color: #00d68f;
-  transform: scale(1.1);
 }
 </style>
