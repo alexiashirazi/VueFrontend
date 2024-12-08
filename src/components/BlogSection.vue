@@ -114,7 +114,7 @@
 
 .article-card {
   position: relative;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.2));
+  background: rgba(0, 0, 0, 0.7);
   padding: 2rem;
   border-radius: 12px;
   text-align: left;
@@ -218,6 +218,5 @@
   transform: scale(1.1);
   box-shadow: 0 0 10px #00ffaf;
 }
-
 
 </style>
